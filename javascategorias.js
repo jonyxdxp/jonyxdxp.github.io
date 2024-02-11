@@ -1640,3 +1640,117 @@ DOMContentLoaded.addEventOrExecute(() => {
     
 });
             });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    var fb_params = {
+            referrer: document.referrer,
+            userAgent: navigator.userAgent,
+            language: 'es-AR'
+        };
+                let pixelFunction = 'track';
+        let pixelEvent = null;
+        let eventID = null;
+        const fbTimestamp = new Date().getTime();
+                
+        LS.ready.then(function() {
+            let sessionID = cookieService.get('store_login_session');
+            if (sessionID) {
+                sessionID = sessionID.slice(-40).toLowerCase();
+            }
+            fbq('init', '185729343334083',
+                { external_id: sessionID, agent: 'tiendanube-core' }
+            );
+            fbq('track', 'PageView');
+            if(pixelEvent) {
+                fbq(pixelFunction, pixelEvent, fb_params, { eventID });
+                if (pixelEvent === 'AddToCart') {
+                    const cartItemId = '';
+                    const unitPrice = 0;
+                    const quantity = fb_params['value'] / unitPrice;
+                    const data = {
+                        ...fb_params,
+                        quantity
+                    };
+                    sendNubeSocialTracking(LS.cart.id, cartItemId, data, eventID);
+                }
+            }
+
+                        LS.on(LS.events.productAddedToCart, function (event, data) {
+                if (!data) {
+                    data = event.detail;
+                }
+
+                const { cart_item: cartItem, quantity_added: quantityAdded } = data;
+                const value = cartItem.unit_price / 100 * quantityAdded;
+
+                // Facebook Pixel does not have an event to remove products from the cart.
+                if (value <= 0) {
+                    return;
+                }
+
+                const ajaxAddToCartTimestamp = new Date().getTime();
+                const eventName = 'AddToCart';
+                                const eventId = `${cartItem.variant_id}_add_to_cart_${ajaxAddToCartTimestamp}`;
+                
+                const customData = {
+                    referrer: document.referrer,
+                    userAgent: navigator.userAgent,
+                    language: 'es-AR',
+                    content_ids: [cartItem.variant_id],
+                    content_type: 'product',
+                    currency: LS.currency.code,
+                    quantity: quantityAdded,
+                    value
+                };
+
+                trackAddToCartAJAX(customData, eventId);
+                sendNubeSocialTracking(LS.cart.id, cartItem.id, customData, eventId);
+            });
+        });
+
+        function trackAddToCartAJAX(customData, eventID) {
+            const eventName = 'AddToCart';
+            fbq('track', eventName, customData, { eventID });
+        }
+
+        async function sendNubeSocialTracking(cartId, cartItemId, customData, eventId) {
+            let data = {
+                event_name: 'AddToCart',
+                cart_id: cartId,
+                cart_product_id: cartItemId,
+                event_id: eventId,
+            };
+
+            Object.assign(data, customData)
+
+            setTimeout(function() {
+                new Image().src = '/fb-capi/?' + new URLSearchParams(data);
+            }, 500);
+        }
