@@ -1754,3 +1754,270 @@ DOMContentLoaded.addEventOrExecute(() => {
                 new Image().src = '/fb-capi/?' + new URLSearchParams(data);
             }, 500);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ window.nsGA4 = window.nsGA4 || [];
+    function gtagNsGA4(){nsGA4.push(arguments);}
+
+    gtagNsGA4('js', new Date());
+
+    gtagNsGA4('config', 'G-XHWSH31SDJ');
+
+    
+const PRODUCT_ITEM_SELECTOR = '.js-item-product';
+
+
+
+
+    gtagNsGA4("event", "view_item_list", {
+        item_list_id: "home",
+        item_list_name: "Inicio",
+        items: [
+                            {"item_id":"759553006","item_name":"Collar Joy","item_variant":"","price":13990,"item_category3":"Gamuza","item_category2":"COLOR","item_category":"COLLARES"},
+                            {"item_id":"337334256","item_name":"Cadena Elixir Gold","item_variant":"","price":15990,"item_category3":"Dorado","item_category2":"COLOR","item_category":"COLLARES"},
+                            {"item_id":"759523563","item_name":"Collar Elvis Gold","item_variant":"","price":17990,"item_category3":"Dorado","item_category2":"COLOR","item_category":"COLLARES"},
+                            {"item_id":"764342984","item_name":"Aros Mini Vic Gold","item_variant":"","price":7990,"item_category3":"Dorado","item_category2":"COLOR","item_category":"AROS"},
+                            {"item_id":"153121889","item_name":"Aros Silver hoops M","item_variant":"","price":5990,"item_category3":"Plateado","item_category2":"COLOR","item_category":"AROS"},
+                            {"item_id":"774885246","item_name":"Aros Glossy Silver 23 mm","item_variant":"","price":18990,"item_category3":"Plateado","item_category2":"COLOR","item_category":"AROS"},
+                            {"item_id":"787133795","item_name":"Aro Prize Gold (Estrella)","item_variant":"Estrella","price":6990,"item_category3":"Brillos","item_category2":"COLOR","item_category":"AROS"},
+                            {"item_id":"349604430","item_name":"Aros Ines Gold S","item_variant":"","price":7990,"item_category3":"Dorado","item_category2":"COLOR","item_category":"AROS"},
+                            {"item_id":"787115161","item_name":"Collar Michelle","item_variant":"","price":19990,"item_category3":"Dorado","item_category2":"COLOR","item_category":"COLLARES"},
+                            {"item_id":"764690480","item_name":"Aros Link","item_variant":"","price":10990,"item_category3":"Dorado","item_category2":"COLOR","item_category":"AROS"},
+                            {"item_id":"787143557","item_name":"Pulsera Tennis Silver","item_variant":"","price":12990,"item_category3":"Plateado","item_category2":"COLOR","item_category":"PULSERAS"},
+                            {"item_id":"757861962","item_name":"Aro Lunita Gold","item_variant":"","price":7190,"item_category3":"Dorado","item_category2":"COLOR","item_category":"AROS"},
+                            {"item_id":"153122416","item_name":"Collar Renee Gold","item_variant":"","price":9990,"item_category3":"Dorado","item_category2":"COLOR","item_category":"COLLARES"},
+                    ]
+    });
+
+    LS.ready.then(function() {
+        document.querySelectorAll(PRODUCT_ITEM_SELECTOR).forEach(element => {
+            const productId = element.dataset.productId;
+            const productLink = element.querySelector('.js-item-name');
+
+            if (!productId || !productLink) {
+                return;
+            }
+
+            element.addEventListener('click', function(event) {
+                const hasClickedInALink = Boolean(event.target.closest('a'));
+                const productName = productLink.getAttribute('title') ?? productLink.innerText;
+
+                if (!hasClickedInALink || !productName) {
+                    return;
+                }
+
+                gtagNsGA4('event', 'select_item', {
+                    item_list_id: "home",
+                    item_list_name: "Inicio",
+                    items: [{
+                        item_id: productId.toString(),
+                        item_name: productName,
+                    }]
+                });
+            });
+        });
+    });
+
+
+function sendSelectItemEvent(productClassName) {
+    const PRODUCT_GRID_SELECTOR = '.js-product-table,.product-grid,.js-infinite-grid,.js-masonry-grid';
+
+    const items = document.querySelectorAll(PRODUCT_GRID_SELECTOR).forEach(element => {
+        element.addEventListener('click', function(event) {
+            const product = event.target.closest(productClassName);
+            if (!product) {
+                return;
+            }
+
+            const id = product.dataset.productId;
+            const name = event.target.closest('a')?.getAttribute('title');
+
+            if (!id || !name) {
+                return;
+            }
+
+            gtagNsGA4('event', 'select_item', {
+                items: [{
+                    item_id: id.toString(),
+                    item_name: name,
+                }]
+            });
+        });
+    });
+}
+
+
+
+
+
+
+
+
+
+   function ga4GtmBuildItemFromEventData(data){
+        let cart_item = {
+            item_id: data.cart_item.variant_id,
+            item_name: data.cart_item.name,
+            item_variant: data.cart_item.short_variant_name,
+            price: data.cart_item.unit_price / 100,
+            quantity: Math.abs(+data.quantity_added),
+        }
+
+        for (const item_category_key in data.cart_item.google_item_categories) {
+            cart_item[item_category_key] = data.cart_item.google_item_categories[item_category_key];
+        }
+
+        return cart_item;
+    }
+
+    function ga4GtmGetEventFromData(data){
+        return data.quantity_added > 0 ? 'add_to_cart' : 'remove_from_cart';
+    }
+
+
+
+
+         window.skipJQuery = true;
+    
+    LS.ready.then(() =>  {
+        if (!window.jQueryNuvem) {
+            window.jQueryNuvem = $
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+  var LS = LS || {};
+
+    LS.store = {
+        id : 357850,
+        url : "nickifichiaccesorios.mitiendanube.com",
+        custom_url : "www.fichi.com.ar",
+        checkout_express : false,
+        gads_measurement_id : "",
+    };
+    LS.cart = {
+        id : null,
+        subtotal : 0,
+        has_non_shippable_products: false,
+        has_shippable_products: false,
+        items : [
+                    ]
+    };
+    LS.lang = "es_AR";
+    LS.langCode = "es";
+    LS.currency = {
+        code : "ARS",
+        display_short: "\u0024",
+        display_long: "\u0024\u0020ARS",
+        cents_separator : ",",
+        thousands_separator : "."
+    };
+    LS.country = "AR";
+                LS.customer = null;
+    LS.template= "home";
+    LS.theme = {
+        code: "cali",
+        name: "Cali",
+        custom: false,
+    };
+    LS.metricsWorkerScriptUrl = "https://acdn.mitiendanube.com/assets/stores/js/metrics-worker-c984926f96a2e4787f155a9755d6944a30.js?v=19413659"
+
+    LS.socialScripts = [];
+    LS.DOMReady = function(fn) {
+        if (document.addEventListener) {
+            document.addEventListener('DOMContentLoaded', fn);
+        } else {
+            document.attachEvent('onreadystatechange', function() {
+                if (document.readyState === 'interactive')
+                    fn();
+            });
+        }
+    };
+
+    // Making it a thenable so it can be made into a full fledged Promise later
+    LS._readyCallbacks = [];
+    LS.ready = {
+        then: function(callback){
+            LS._readyCallbacks.push(callback);
+        }
+    };
+
+    window.addEventListener('load', () => {
+        if(!window.cartService) {
+            return;
+        }
+
+        window.cartService.setCurrentLoadTime(1707682655);
+    });
+
+    window.pageData = {
+        id: "home",
+        name: "Inicio"
+    }
+
+    window.initialCart = {"id":null,"subtotal":0,"total":0,"discounts":0,"promotions":[],"shipping_zipcode":null};
+    window.metricServiceDispatchQueue = [];
+    window.metricService = { dispatch: (event) => window.metricServiceDispatchQueue.push(event) };
+
+    window.translations = {
+        cart: {
+            error_messages: {
+                out_of_stock: 'No hay más stock de este producto.',
+                unavailable_product: 'Este producto no está disponible.',
+                update_error: 'Ocurrió un error al actualizar el carrito.'
+            },
+            name: 'Carrito de compras'
+        }
+    };
